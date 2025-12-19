@@ -1,4 +1,4 @@
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo (1).png"
 import { GoHome } from "react-icons/go";
 import { CiDiscount1, CiHeart } from "react-icons/ci";
 import { MdOutlineMail } from "react-icons/md";
