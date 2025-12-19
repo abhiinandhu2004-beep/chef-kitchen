@@ -150,12 +150,12 @@ export const Cheffkitchen = () => {
 
 
   return (
-    <div className="flex flex-col  lg:flex-row w-full min-h-screen bg-[#2D303E]  ">
+    <div className="flex flex-col w-full min-h-screen bg-[#2D303E] md:flex-col lg:flex-row ">
       <Sidebar />
       <div className={`
     flex flex-col lg:flex-row lg:w-full lg:ml-30
     transition-all duration-300
-    
+    ${showOrders ? "lg:mr-100" : "lg:mr-0"}
   `}>
         <div className="flex-1 fixed top-0 z-30 bg-[#2D303E] pt-4 w-full transition-all duration-300">
 
@@ -170,7 +170,7 @@ export const Cheffkitchen = () => {
 
               <div className={`relative w-full sm:w-full lg:w-60  mb-4
               transition-all duration-300
-               `}>
+              ${showOrders ? "lg:mr-100" : "lg:mr-0"}`}>
 
 
 
@@ -220,7 +220,7 @@ export const Cheffkitchen = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto h-200px pr-2  pt-60 w-250">
+        <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar pt-60">
 
           <div className="flex flex-row justify-between  ">
 
@@ -356,8 +356,7 @@ export const Cheffkitchen = () => {
       </div>
 
       {showOrders && (
-        <div className="w-full">
-          <Orders
+        <Orders
           cart={cart}
           setCart={setCart}
           onClose={() => {
@@ -365,7 +364,6 @@ export const Cheffkitchen = () => {
             setCart([]);
           }}
         />
-        </div>
       )}
 
 
@@ -381,4 +379,4 @@ export const Cheffkitchen = () => {
 <div className="relative">
   {/* Selected button */}
 
-// </div>
+</div>
