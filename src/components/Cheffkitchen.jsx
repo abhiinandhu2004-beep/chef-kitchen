@@ -169,12 +169,13 @@ export const Cheffkitchen = () => {
               </div>
 
               <div className={`relative w-full sm:w-full lg:w-60  mb-4
-              transition-all duration-300
+              
               ${showOrders ? "lg:mr-100" : "lg:mr-0"}`}>
 
 
 
-                <FiSearch className="absolute top-3.5 lg:right-102 right-98  text-white z-10" />
+                <FiSearch className="absolute lg:-left-46 lg:top-5 lg:-translate-y-1/2 text-white opacity-70 z-10 
+                                    left-4 top-3.5" />
                 <input
                   type="search"
                   placeholder="search for food..."
@@ -220,17 +221,19 @@ export const Cheffkitchen = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar pt-60">
+        <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar pt-65 px-4 pb-15">
 
           <div className="flex flex-row justify-between  ">
 
-            <h2 className="text-white text-lg ">Choose Dishes</h2>
+            <div className="flex items-center ">
+              <h2 className="text-white lg:text-lg text-sm  ">Choose Dishes</h2>
 
+            </div>
 
             <div className="flex justify-end-safe gap-4 ">
               <button
                 onClick={() => setShowType(!showType)}
-                className="flex items-center gap-1 bg-[#2D303E] px-4 py-2 rounded-lg border border-gray-600 text-white cursor-pointer"
+                className="flex items-center gap-1 bg-[#2D303E] px-4 py-2 rounded-lg border border-gray-600 text-white cursor-pointer lg:text-lg text-sm w-30"
               >
                 {orderType}
                 <ChevronDown />
@@ -238,7 +241,7 @@ export const Cheffkitchen = () => {
 
               {/* Dropdown options */}
               {showType && (
-                <div className="absolute right-0 mt-2 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10">
+                <div className="absolute right-0 mt-2 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10 lg:text-lg text-sm">
                   {["Dine In", "Take Away", "Delivery"].map((type) => (
                     <button
                       key={type}
@@ -246,7 +249,7 @@ export const Cheffkitchen = () => {
                         setOrderType(type);
                         setShowType(false);
                       }}
-                      className="w-full text-left px-4 py-2 hover:bg-amber-500 text-white"
+                      className="w-full text-left px-4 py-2 hover:bg-amber-500 text-white  cursor-pointer"
                     >
                       {type}
                     </button>
