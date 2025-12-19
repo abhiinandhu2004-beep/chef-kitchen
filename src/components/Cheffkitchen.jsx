@@ -186,7 +186,7 @@ export const Cheffkitchen = () => {
               </div>
             </div>
 
-            <div className="flex text-white mt-4 space-x-6 py-3 overflow-x-auto">
+            <div className="flex text-white lg:mt-4 mt-8 space-x-6 py-3 overflow-x-auto">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
