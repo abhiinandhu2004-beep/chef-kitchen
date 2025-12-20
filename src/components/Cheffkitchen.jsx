@@ -3,6 +3,8 @@ import { FiSearch } from "react-icons/fi";
 import { Orders } from "./Orders";
 import Sidebar from "./Sidebar";
 import { ChevronDown } from 'lucide-react';
+import Lottie from "lottie-react";
+import notFound from "../assets/No Data Found.json"
 
 
 const tabs = [
@@ -19,6 +21,7 @@ const menuItems = [
     bowls: 22,
     sizes: ["S", "M", "L"],
     img: "/1.png",
+    availableFor: ["Dine In", "Delivery", "Take Away"]
   },
   {
     title: "Hot spicy fried rice with omlet",
@@ -27,6 +30,9 @@ const menuItems = [
     bowls: 15,
     sizes: ["S", "M", "L"],
     img: "/Image 8.png",
+    availableFor: ["Dine In", "Delivery", "Take Away"]
+
+
   },
   {
     title: "Spicy  noodle with special omelette",
@@ -35,6 +41,8 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/3.png",
+    availableFor: ["Dine In", "Take Away"]
+
   },
   {
     title: " Noodle with spinach leaf and omlette",
@@ -42,6 +50,8 @@ const menuItems = [
     bowls: 22,
     sizes: ["S", "M", "L"],
     img: "/Image 5.png",
+    availableFor: ["Dine In", "Delivery", "Take Away"]
+
   },
   {
     title: " spicy fried rice with special omlette",
@@ -49,6 +59,8 @@ const menuItems = [
     bowls: 13,
     sizes: ["S", "M", "L"],
     img: "/Images.png",
+    availableFor: ["Dine In", "Delivery"]
+
   },
   {
     title: "hot spicy Noodle with special omelette",
@@ -56,6 +68,8 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/Image 6.png",
+    availableFor: ["Dine In"]
+
   },
   {
     title: " spicy fried rice with special omlette",
@@ -63,6 +77,8 @@ const menuItems = [
     bowls: 13,
     sizes: ["S", "M", "L"],
     img: "/Images.png",
+    availableFor: ["Dine In", "Delivery", "Take Away"]
+
   },
   {
     title: "hot spicy Noodle with special omelette",
@@ -70,6 +86,8 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/Image 6.png",
+    availableFor: ["Dine In"]
+
   },
 
 ];
@@ -83,9 +101,16 @@ export const Cheffkitchen = () => {
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
 
-  const filteredMenuItems = menuItems.filter((item) =>
-    item.title.toLowerCase().includes(search.trim().toLowerCase())
-  );
+  const filteredMenuItems = menuItems.filter((item) => {
+    const matchesSearch = item.title
+      .toLowerCase()
+      .includes(search.trim().toLowerCase());
+
+    const matchesOrderType = item.availableFor.includes(orderType);
+
+    return matchesSearch && matchesOrderType;
+  });
+
 
 
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -230,18 +255,18 @@ export const Cheffkitchen = () => {
 
             </div>
 
-            <div className="flex justify-end-safe gap-4 ">
+            <div className="relative flex  gap-4 ">
               <button
                 onClick={() => setShowType(!showType)}
-                className="flex items-center gap-1 bg-[#2D303E] px-4 py-2 rounded-lg border border-gray-600 text-white cursor-pointer lg:text-lg text-sm w-30"
+                className="flex items-center gap-1 bg-[#2D303E] px-5 py-2 rounded-lg border border-gray-600 text-white cursor-pointer  text-sm w-37"
               >
                 {orderType}
-                <ChevronDown />
+               <span className="px-2"> <ChevronDown  className="w-5"/></span>
               </button>
 
               {/* Dropdown options */}
               {showType && (
-                <div className="absolute right-0 mt-2 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10 lg:text-lg text-sm">
+                <div className="absolute right-10 mt-8 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10 text-sm">
                   {["Dine In", "Take Away", "Delivery"].map((type) => (
                     <button
                       key={type}
@@ -277,6 +302,18 @@ export const Cheffkitchen = () => {
             </div>
           </div>
 
+
+          {filteredMenuItems.length === 0 && (
+            <div className="flex justify-center items-center mt-20">
+              <p>
+                <Lottie
+                  animationData={notFound}
+                  loop
+                  className="w-70 h-70"
+                />
+              </p>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {filteredMenuItems.map((item, i) => (
@@ -339,7 +376,8 @@ export const Cheffkitchen = () => {
 
                       className={`
       px-6 py-2 rounded-xl text-white transition-all duration-300
-      ${cart.some((cartItem) => cartItem.title === item.title)
+      ${cart.some((cartItem) => cartItem.title === item.title &&
+                        cartItem.size === (selectedSizes[item.title] || "L"))
                           ? "bg-green-500 cursor-pointer"
                           : " cursor-pointer bg-orange-400"}`}
                     >
@@ -362,6 +400,8 @@ export const Cheffkitchen = () => {
         <Orders
           cart={cart}
           setCart={setCart}
+          orderType={orderType}
+          setOrderType={setOrderType}
           onClose={() => {
             setShowOrders(false);
             setCart([]);

@@ -37,7 +37,7 @@ function Sidebar() {
               {active === index && (
                 <>
                   <div className="absolute  -left-3 w-25 h-20 bg-[#2D303E] rounded-l-2xl ">
-                    <div className="absolute top-0 -left-3 w-25 h-20 bg-[#2D303E] rounded-l-2xl ">
+                    <div className="absolute top-0 right-3 w-22 h-20 bg-[#2D303E] rounded-l-2xl ">
                       <div className="absolute  -left-20 w-10 h-20 bg-[#2D303E] rounded-l-xl" />
 
                       <div className="absolute right-1 -top-9.5 w-10 h-10  z-10">

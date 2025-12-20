@@ -1,8 +1,24 @@
 import { AiOutlineDelete } from "react-icons/ai";
+import Lottie from "lottie-react";
+import emptyCartAnimation from "../assets/empty.json"
 
-export const Orders = ({ cart, setCart, onClose }) => {
-  const removeItem = (title) => {
-    setCart((prev) => prev.filter((item) => item.title !== title));
+export const Orders = ({ cart, setCart, onClose, orderType, setOrderType }) => {
+
+
+  const removeItem = (title, size) => {
+    setCart((prev) =>
+      prev
+        .map((item) => {
+          if (item.title === title && item.size === size) {
+            if (item.qty > 1) {
+              return { ...item, qty: item.qty - 1 };
+            }
+            return null; // remove if qty is 1
+          }
+          return item;
+        })
+        .filter(Boolean)
+    );
   };
 
   const subtotal = cart.reduce(
@@ -26,10 +42,23 @@ export const Orders = ({ cart, setCart, onClose }) => {
       </div>
 
       <div className="flex justify-around gap-4 mt-4">
-        <button className="bg-[#1F1D2B] text-[#F99147] hover:bg-[#EA7C69] rounded-2xl px-4 py-2 hover:text-white border border-gray-600 ">Dine In</button>
-        <button className="bg-[#1F1D2B] text-[#F99147] hover:bg-[#EA7C69] rounded-2xl px-4 py-2 hover:text-white border border-gray-600">Take Away</button>
-        <button className="bg-[#1F1D2B] text-[#F99147] hover:bg-[#EA7C69] rounded-2xl px-4 py-2 hover:text-white border border-gray-600">Delivery</button>
+        {["Dine In", "Take Away", "Delivery"].map((type) => (
+          <button
+            key={type}
+            onClick={() => setOrderType(type)}
+            className={`
+        rounded-2xl px-4 py-2 border transition-all duration-200
+        ${orderType === type
+                ? "bg-[#F99147] text-white border-[#F99147]"
+                : "bg-[#1F1D2B] text-[#F99147] border-gray-600 hover:bg-[#EA7C69] hover:text-white"
+              }
+      `}
+          >
+            {type}
+          </button>
+        ))}
       </div>
+
 
       <div className="grid grid-cols-6 border-b border-gray-700 pb-2 text-sm mb-3 mt-11">
         <span className="col-span-3">Item</span>
@@ -38,50 +67,73 @@ export const Orders = ({ cart, setCart, onClose }) => {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 hide-scrollbar">
-        {cart.map((item, i) => (
-          <div key={i} className="border-b border-gray-700 pb-4 mb-4">
-            <div className="grid grid-cols-6 items-center">
-              <div className="col-span-3 flex gap-3">
-                <img src={item.img} className="w-12 h-12 rounded-full" />
-                <div>
-                  <p className="text-sm">{item.title}</p>
-                  <p className="text-xs text-gray-400">{item.price} AED</p>
+
+
+        <div className="flex-1 overflow-y-auto pr-2 hide-scrollbar">
+          {cart.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center gap-4 mt-4">
+              <Lottie
+                animationData={emptyCartAnimation}
+                loop
+                className="w-52 h-52"
+              />
+              <p className="text-gray-400 mt-4 text-sm">
+                Your cart is empty
+              </p>
+              <p className="text-gray-500 text-xs">
+                Add some delicious dishes 🍜
+              </p>
+            </div>
+          ) : (
+            cart.map((item, i) => (
+              <div key={i} className="border-b border-gray-700 pb-4 mb-4">
+                <div className="grid grid-cols-6 items-center">
+                  <div className="col-span-3 flex gap-3">
+                    <img src={item.img} className="w-12 h-12 rounded-full" />
+                    <div>
+                      <p className="text-sm">{item.title}</p>
+                      <p className="text-xs text-gray-400">{item.price} AED <span className="px-4">{item.size}</span></p>
+                    </div>
+                  </div>
+                  <div className="text-center">{item.qty}</div>
+                  <div className="col-span-2 text-right">
+                    {(item.qty * item.price).toFixed(2)} AED
+                  </div>
+                </div>
+
+                <div className="relative mt-3">
+                  <input
+                    className="w-70 bg-[#2C3045] px-3 py-2 rounded-md text-xs"
+                    placeholder="Order Note..."
+                  />
+                  <AiOutlineDelete
+                    onClick={() => removeItem(item.title, item.size)}
+                    className="absolute right-3 top-2 text-orange-400 cursor-pointer"
+                  />
                 </div>
               </div>
-              <div className="text-center">{item.qty}</div>
-              <div className="col-span-2 text-right">
-                {(item.qty * item.price).toFixed(2)} AED
-              </div>
-            </div>
+            ))
+          )}
+        </div>
 
-            <div className="relative mt-3">
-              <input
-                className="w-70 bg-[#2C3045] px-3 py-2 rounded-md text-xs"
-                placeholder="Order Note..."
-              />
-              <AiOutlineDelete
-                onClick={() => removeItem(item.title)}
-                className="absolute right-3 top-2 text-orange-400 cursor-pointer"
-              />
-            </div>
-          </div>
-        ))}
+
+
       </div>
 
       <div className="pb-11 lg:pb-1">
         <div className="flex justify-between text-sm text-gray-400 mt-4">
-        <span>Discount</span>
-        <span>5%</span>
-      </div>
+          <span>Discount</span>
+          <span>5%</span>
+        </div>
 
-      <div className="flex justify-between text-sm text-gray-400 mt-4">
-        <span>Sub total</span>
-        <span>{subtotal.toFixed(2)} AED</span>
-      </div>
+        <div className="flex justify-between text-sm text-gray-400 mt-4">
+          <span>Sub total</span>
+          <span>{subtotal.toFixed(2)} AED</span>
+        </div>
 
-      <button className="mt-4 bg-[#F99147] py-3 rounded-md w-full">
-        Order Now
-      </button>
+        <button className="mt-4 bg-[#F99147] py-3 rounded-md w-full">
+          Order Now
+        </button>
       </div>
     </div>
   );
