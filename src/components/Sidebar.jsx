@@ -70,12 +70,15 @@ function Sidebar() {
           ))}
         </div>
 
-        <IoLogOutOutline className="text-[#F99147] hover:text-white text-3xl cursor-pointer mt-auto relative z-10" 
-                                    onClick={()=>Navigate("/")}/>
+        <IoLogOutOutline className="text-[#F99147] hover:text-white text-3xl cursor-pointer mt-auto relative z-10"
+          onClick={() => Navigate("/")} />
       </div>
 
-      <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full h-15 bg-[#1F1D2B] flex justify-between items-center border-t border-gray-700">
-        <GoHome className="text-[#F99147] text-3xl" />
+      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 
+                w-[92%] h-16 bg-[#1F1D2B] 
+                rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.6)]
+                flex items-center justify-around px-4 border border-white/5 opacity-70">
+        <GoHome className="text-[#F99147] text-3xl " />
         <CiDiscount1 className="text-[#F99147] text-3xl" />
         <CiHeart className="text-[#F99147] text-3xl" />
         <MdOutlineMail className="text-[#F99147] text-3xl" />
