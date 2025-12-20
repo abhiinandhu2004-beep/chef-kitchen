@@ -6,6 +6,8 @@ import { ChevronDown } from 'lucide-react';
 import Lottie from "lottie-react";
 import notFound from "../assets/No Data Found.json"
 import logo from "../assets/catering(Fork & Knife).json"
+import { motion } from "framer-motion";
+
 
 
 const tabs = [
@@ -193,18 +195,18 @@ export const Cheffkitchen = () => {
     });
   };
 
-    const getTodayDate = () => {
-  const today = new Date();
+  const getTodayDate = () => {
+    const today = new Date();
 
-  const options = {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+    const options = {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    };
+
+    return today.toLocaleDateString("en-US", options);
   };
-
-  return today.toLocaleDateString("en-US", options);
-};
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#2D303E] md:flex-col lg:flex-row ">
@@ -228,7 +230,16 @@ export const Cheffkitchen = () => {
                 />
 
                 <div className="flex flex-col mt-7">
-                  <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
+
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  >
+                    <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
+                  </motion.div>
+
+
                   <p className="text-[#E0E6E9] opacity-50">
                     {getTodayDate()}
                   </p>
@@ -418,10 +429,10 @@ export const Cheffkitchen = () => {
                       }}
 
                       className={`
-      px-6 py-2 rounded-xl text-white transition-all duration-300
+      px-6 py-2 rounded-xl text-white transition-all duration-300 
       ${cart.some((cartItem) => cartItem.title === item.title &&
                         cartItem.size === (selectedSizes[item.title] || "L"))
-                          ? "bg-green-500 cursor-pointer"
+                          ? "bg-green-500 cursor-pointer rotate-scale"
                           : " cursor-pointer bg-orange-400"}`}
                     >
                       {cart.some((cartItem) => cartItem.title === item.title)
@@ -449,6 +460,7 @@ export const Cheffkitchen = () => {
             setShowOrders(false);
             setCart([]);
           }}
+
         />
       )}
 

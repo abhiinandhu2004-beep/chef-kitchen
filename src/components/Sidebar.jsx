@@ -61,7 +61,7 @@ function Sidebar() {
               <Icon
                 className={` relative z-10 text-3xl transition-all duration-300
                   ${active === index
-                    ? " text-[#fdfdfd] bg-[#F99147] rounded-lg w-13 h-13 p-2"
+                    ? " text-[#fdfdfd] bg-[#F99147] rounded-lg w-13 h-13 p-2 pulse-ring"
                     : "text-white/50 hover:text-white"
                   }
                 `}

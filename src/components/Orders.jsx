@@ -31,7 +31,7 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType }) => {
       className="
         w-full bg-[#1F1D2B] px-5 py-5 text-white flex flex-col
         lg:fixed lg:top-0 lg:right-0 lg:h-screen lg:w-96 lg:z-50
-        lg:rounded-l-2xl 
+        lg:rounded-l-2xl slide-in 
       "
     >
       <div className="flex justify-between items-center mb-4 mt-2">
