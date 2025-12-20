@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import { ChevronDown } from 'lucide-react';
 import Lottie from "lottie-react";
 import notFound from "../assets/No Data Found.json"
+import logo from "../assets/catering(Fork & Knife).json"
 
 
 const tabs = [
@@ -186,13 +187,24 @@ export const Cheffkitchen = () => {
 
           <div className="w-full px-5 -h-screen flex flex-col">
             <div className="flex lg:items-center justify-between mt-4 lg:flex-row flex-col p-0 lg:space-y-0 space-y-4">
-              <div>
-                <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
+              
+              
+              <div className="flex flex-row mt-0">
+                  <Lottie
+                  animationData={logo}
+                  loop
+                  className="w-30 h-30"
+                />
+                
+               <div className="flex flex-col mt-7">
+                 <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
                 <p className="text-[#E0E6E9] opacity-50">
                   Tuesday, 2 March 2024
                 </p>
-              </div>
+               </div>
+              
 
+              </div>
               <div className={`relative w-full sm:w-full lg:w-60  mb-4
               
               ${showOrders ? "lg:mr-100" : "lg:mr-0"}`}>
@@ -211,7 +223,7 @@ export const Cheffkitchen = () => {
               </div>
             </div>
 
-            <div className="flex text-white lg:mt-4 mt-8 space-x-6 py-3 overflow-x-auto">
+            <div className="flex text-white lg:mt-0 mt-8 space-x-6 py-3 overflow-x-auto">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
@@ -261,7 +273,7 @@ export const Cheffkitchen = () => {
                 className="flex items-center gap-1 bg-[#2D303E] px-5 py-2 rounded-lg border border-gray-600 text-white cursor-pointer  text-sm w-37"
               >
                 {orderType}
-               <span className="px-2"> <ChevronDown  className="w-5"/></span>
+                <span className="px-2"> <ChevronDown className="w-5" /></span>
               </button>
 
               {/* Dropdown options */}
