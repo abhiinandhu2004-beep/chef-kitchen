@@ -51,7 +51,7 @@ const menuItems = [
 
   },
   {
-    title: " Noodle with spinach leaf and omlette",
+    title: " Noodle with  leaf and omlette",
     price: "25.00",
     bowls: 22,
     sizes: ["S", "M", "L"],
@@ -289,7 +289,7 @@ export const Cheffkitchen = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar pt-65 px-4 pb-15">
+        <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar lg:pt-65 md:pt-80 pt-85 px-4 pb-15">
 
           <div className="flex flex-row justify-between  ">
 
