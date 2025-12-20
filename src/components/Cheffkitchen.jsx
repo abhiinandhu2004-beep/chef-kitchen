@@ -149,6 +149,7 @@ export const Cheffkitchen = () => {
     if (size === "S") return (base / 3).toFixed(2);
 
     return base.toFixed(2); // default / L
+
   };
 
 
@@ -192,7 +193,18 @@ export const Cheffkitchen = () => {
     });
   };
 
+    const getTodayDate = () => {
+  const today = new Date();
 
+  const options = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  return today.toLocaleDateString("en-US", options);
+};
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#2D303E] md:flex-col lg:flex-row ">
@@ -218,7 +230,7 @@ export const Cheffkitchen = () => {
                 <div className="flex flex-col mt-7">
                   <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
                   <p className="text-[#E0E6E9] opacity-50">
-                    Tuesday, 2 March 2024
+                    {getTodayDate()}
                   </p>
                 </div>
 
