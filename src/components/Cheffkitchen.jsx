@@ -22,7 +22,9 @@ const menuItems = [
     bowls: 22,
     sizes: ["S", "M", "L"],
     img: "/1.png",
-    availableFor: ["Dine In", "Delivery", "Take Away"]
+    availableFor: ["Dine In", "Delivery", "Take Away"],
+    category: "our"
+
   },
   {
     title: "Hot spicy fried rice with omlet",
@@ -31,7 +33,8 @@ const menuItems = [
     bowls: 15,
     sizes: ["S", "M", "L"],
     img: "/Image 8.png",
-    availableFor: ["Dine In", "Delivery", "Take Away"]
+    availableFor: ["Dine In", "Delivery", "Take Away"],
+    category: "today"
 
 
   },
@@ -42,7 +45,9 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/3.png",
-    availableFor: ["Dine In", "Take Away"]
+    availableFor: ["Dine In", "Take Away"],
+    category: "south"
+
 
   },
   {
@@ -51,7 +56,9 @@ const menuItems = [
     bowls: 22,
     sizes: ["S", "M", "L"],
     img: "/Image 5.png",
-    availableFor: ["Dine In", "Delivery", "Take Away"]
+    availableFor: ["Dine In", "Delivery", "Take Away"],
+    category: "our"
+
 
   },
   {
@@ -60,7 +67,9 @@ const menuItems = [
     bowls: 13,
     sizes: ["S", "M", "L"],
     img: "/Images.png",
-    availableFor: ["Dine In", "Delivery"]
+    availableFor: ["Dine In", "Delivery"],
+    category: "today"
+
 
   },
   {
@@ -69,7 +78,9 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/Image 6.png",
-    availableFor: ["Dine In"]
+    availableFor: ["Dine In"],
+    category: "south"
+
 
   },
   {
@@ -78,7 +89,9 @@ const menuItems = [
     bowls: 13,
     sizes: ["S", "M", "L"],
     img: "/Images.png",
-    availableFor: ["Dine In", "Delivery", "Take Away"]
+    availableFor: ["Dine In", "Delivery", "Take Away"],
+    category: "our"
+
 
   },
   {
@@ -87,7 +100,9 @@ const menuItems = [
     bowls: 17,
     sizes: ["S", "M", "L"],
     img: "/Image 6.png",
-    availableFor: ["Dine In"]
+    availableFor: ["Dine In"],
+    category: ["today"]
+
 
   },
 
@@ -108,8 +123,12 @@ export const Cheffkitchen = () => {
       .includes(search.trim().toLowerCase());
 
     const matchesOrderType = item.availableFor.includes(orderType);
+    const matchesCategory =
+      active === "today" ? true : item.category === active;
 
-    return matchesSearch && matchesOrderType;
+
+
+    return matchesSearch && matchesOrderType && matchesCategory;
   });
 
 
@@ -187,22 +206,22 @@ export const Cheffkitchen = () => {
 
           <div className="w-full px-5 -h-screen flex flex-col">
             <div className="flex lg:items-center justify-between mt-4 lg:flex-row flex-col p-0 lg:space-y-0 space-y-4">
-              
-              
+
+
               <div className="flex flex-row mt-0">
-                  <Lottie
+                <Lottie
                   animationData={logo}
                   loop
                   className="w-30 h-30"
                 />
-                
-               <div className="flex flex-col mt-7">
-                 <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
-                <p className="text-[#E0E6E9] opacity-50">
-                  Tuesday, 2 March 2024
-                </p>
-               </div>
-              
+
+                <div className="flex flex-col mt-7">
+                  <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
+                  <p className="text-[#E0E6E9] opacity-50">
+                    Tuesday, 2 March 2024
+                  </p>
+                </div>
+
 
               </div>
               <div className={`relative w-full sm:w-full lg:w-60  mb-4
