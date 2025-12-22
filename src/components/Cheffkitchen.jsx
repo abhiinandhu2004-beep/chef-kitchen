@@ -7,7 +7,7 @@ import Lottie from "lottie-react";
 import notFound from "../assets/No Data Found.json"
 import logo from "../assets/catering(Fork & Knife).json"
 import { motion } from "framer-motion";
-
+import {OrderReceipt} from "../components/orderReceipt"
 
 
 const tabs = [
@@ -118,6 +118,8 @@ export const Cheffkitchen = () => {
   const [search, setSearch] = useState("");
   const [orderType, setOrderType] = useState("Dine In");
   const [showType, setShowType] = useState(false);
+  const [showReceipt, setShowReceipt] = useState(false);
+
 
   const filteredMenuItems = menuItems.filter((item) => {
     const matchesSearch = item.title
@@ -155,7 +157,10 @@ export const Cheffkitchen = () => {
   };
 
 
-
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.qty * parseFloat(item.price),
+    0
+  );
 
 
 
@@ -345,127 +350,141 @@ export const Cheffkitchen = () => {
                 <button
                   onClick={() => {
                     setShowOrders(true);
-                    onClose();
+                   {() => setShowOrders(false)}
                   }}
-                  className="bg-orange-400 text-white w-30 p-2 rounded-lg cursor-pointer"
+                className="bg-orange-400 text-white w-30 p-2 rounded-lg cursor-pointer"
                 >Order Now
-                </button>
-              </div>
-
-
+              </button>
             </div>
-          </div>
 
 
-          {filteredMenuItems.length === 0 && (
-            <div className="flex justify-center items-center mt-20">
-              <p>
-                <Lottie
-                  animationData={notFound}
-                  loop
-                  className="w-70 h-70"
-                />
-              </p>
-            </div>
-          )}
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {filteredMenuItems.map((item, i) => (
-              <div
-                key={i}
-                className="bg-[#1F2335] rounded-xl p-3 relative pb-5 mt-16"
-              >
-                <img
-                  src={item.img}
-                  className="w-24 rounded-full absolute -top-10 left-1/2 -translate-x-1/2"
-                />
-
-                <h3 className="mt-16 text-xs text-white text-center">
-                  {item.title}
-                </h3>
-
-                <div className="flex justify-center gap-2 mt-2">
-                  {item.oldPrice && (
-                    <span className="line-through text-[#FF3B30AD] text-sm">
-                      {item.oldPrice} AED
-                    </span>
-                  )}
-                  <span className="text-[#34C759] font-bold text-sm">
-                    {getPriceBySize(item.price, selectedSizes[item.title])} AED
-                  </span>
-
-
-                </div>
-
-                <p className="text-xs text-gray-400 text-center mt-2">
-                  {item.bowls} Bowls available
-                </p>
-
-                <div className="flex justify-center gap-2 mt-3">
-                  {item.sizes.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => handleSizeSelect(item.title, s)}
-                      className={`text-xs px-2 py-1 rounded-md border
-                          ${selectedSizes[item.title] === s
-                          ? "bg-[#F99147] text-white border-[#F99147]"
-                          : "border-gray-500 text-white hover:bg-[#F99147]"
-                        }
-      `}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-
-
-                <div className="flex justify-center mt-6">
-                  <div className="flex justify-center mt-6">
-                    <button
-                      onClick={() => {
-                        handleAddToCart(item);
-                        setShowOrders(true);
-
-                      }}
-
-                      className={`
-      px-6 py-2 rounded-xl text-white transition-all duration-300 
-      ${cart.some((cartItem) => cartItem.title === item.title &&
-                        cartItem.size === (selectedSizes[item.title] || "L"))
-                          ? "bg-green-500 cursor-pointer rotate-scale"
-                          : " cursor-pointer bg-orange-400"}`}
-                    >
-                      {cart.some((cartItem) => cartItem.title === item.title)
-                        ? "Added ✓"
-                        : "Add"}
-                    </button>
-                  </div>
-
-
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
+
+        {filteredMenuItems.length === 0 && (
+          <div className="flex justify-center items-center mt-20">
+            <p>
+              <Lottie
+                animationData={notFound}
+                loop
+                className="w-70 h-70"
+              />
+            </p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {filteredMenuItems.map((item, i) => (
+            <div
+              key={i}
+              className="bg-[#1F2335] rounded-xl p-3 relative pb-5 mt-16"
+            >
+              <img
+                src={item.img}
+                className="w-24 rounded-full absolute -top-10 left-1/2 -translate-x-1/2"
+              />
+
+              <h3 className="mt-16 text-xs text-white text-center">
+                {item.title}
+              </h3>
+
+              <div className="flex justify-center gap-2 mt-2">
+                {item.oldPrice && (
+                  <span className="line-through text-[#FF3B30AD] text-sm">
+                    {item.oldPrice} AED
+                  </span>
+                )}
+                <span className="text-[#34C759] font-bold text-sm">
+                  {getPriceBySize(item.price, selectedSizes[item.title])} AED
+                </span>
+
+
+              </div>
+
+              <p className="text-xs text-gray-400 text-center mt-2">
+                {item.bowls} Bowls available
+              </p>
+
+              <div className="flex justify-center gap-2 mt-3">
+                {item.sizes.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => handleSizeSelect(item.title, s)}
+                    className={`text-xs px-2 py-1 rounded-md border
+                          ${selectedSizes[item.title] === s
+                        ? "bg-[#F99147] text-white border-[#F99147]"
+                        : "border-gray-500 text-white hover:bg-[#F99147]"
+                      }
+      `}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+
+
+              <div className="flex justify-center mt-6">
+                <div className="flex justify-center mt-6">
+                  <button
+                    onClick={() => {
+                      handleAddToCart(item);
+                      setShowOrders(true);
+
+                    }}
+
+                    className={`
+      px-6 py-2 rounded-xl text-white transition-all duration-300 
+      ${cart.some((cartItem) => cartItem.title === item.title &&
+                      cartItem.size === (selectedSizes[item.title] || "L"))
+                        ? "bg-green-500 cursor-pointer rotate-scale"
+                        : " cursor-pointer bg-orange-400"}`}
+                  >
+                    {cart.some((cartItem) => cartItem.title === item.title)
+                      ? "Added ✓"
+                      : "Add"}
+                  </button>
+                </div>
+
+
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {showOrders && (
-        <Orders
-          cart={cart}
-          setCart={setCart}
-          orderType={orderType}
-          setOrderType={setOrderType}
-          onClose={() => {
-            setShowOrders(false);
-            setCart([]);
-          }}
-
-        />
-      )}
-
-
     </div>
+
+      {
+    showOrders && (
+      <Orders
+        cart={cart}
+        setCart={setCart}
+        orderType={orderType}
+        setOrderType={setOrderType}
+        onClose={() => {
+          setShowOrders(false);
+          setCart([]);
+        }}
+        setShowReceipt={setShowReceipt}
+
+      />
+    )
+  }
+
+  {
+    showReceipt && (
+      <OrderReceipt
+        cart={cart}
+        subtotal={subtotal}
+        orderType={orderType}
+        onClose={() => setShowReceipt(false)}
+      />
+    )
+  }
+
+
+    </div >
 
   );
 };

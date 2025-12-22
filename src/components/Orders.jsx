@@ -2,7 +2,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import Lottie from "lottie-react";
 import emptyCartAnimation from "../assets/empty.json"
 
-export const Orders = ({ cart, setCart, onClose, orderType, setOrderType }) => {
+export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setShowReceipt }) => {
 
 
   const removeItem = (title, size) => {
@@ -25,6 +25,14 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType }) => {
     (sum, item) => sum + item.qty * parseFloat(item.price),
     0
   );
+
+  const DELIVERY_CHARGE = 10;
+
+  const deliveryCharge =
+    orderType === "Delivery" ? DELIVERY_CHARGE : 0;
+
+  const total = subtotal + deliveryCharge;
+
 
   return (
     <div
@@ -131,9 +139,13 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType }) => {
           <span>{subtotal.toFixed(2)} AED</span>
         </div>
 
-        <button className="mt-4 bg-[#F99147] py-3 rounded-md w-full">
+        <button
+          onClick={() => setShowReceipt(true)}
+          className="mt-4 bg-[#F99147] py-3 rounded-md w-full"
+        >
           Order Now
         </button>
+
       </div>
     </div>
   );
