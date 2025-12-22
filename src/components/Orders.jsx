@@ -109,15 +109,19 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
                   </div>
                 </div>
 
-                <div className="relative mt-3">
+                <div className="relative mt-3 flex flex-row gap-4">
                   <input
                     className="w-70 bg-[#2C3045] px-3 py-2 rounded-md text-xs"
                     placeholder="Order Note..."
                   />
-                  <AiOutlineDelete
-                    onClick={() => removeItem(item.title, item.size)}
-                    className="absolute right-3 top-2 text-orange-400 cursor-pointer"
-                  />
+
+                  <button className="bg-[#1F1D2B] p-4 border border-amber-600 rounded-sm hover:border-pink-500"> 
+                    <AiOutlineDelete
+                      onClick={() => removeItem(item.title, item.size)}
+                      className="absolute right-1 top-1 text-orange-400 cursor-pointer text-2xl hover:text-pink-500"
+                    />
+                  </button>
+
                 </div>
               </div>
             ))

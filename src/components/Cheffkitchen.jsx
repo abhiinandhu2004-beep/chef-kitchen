@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import {OrderReceipt} from "../components/orderReceipt"
 
 
+
 const tabs = [
   { id: "today", label: "Today Special" },
   { id: "our", label: "Our Special" },
@@ -129,13 +130,8 @@ export const Cheffkitchen = () => {
     const matchesOrderType = item.availableFor.includes(orderType);
     const matchesCategory =
       active === "today" ? true : item.category === active;
-
-
-
     return matchesSearch && matchesOrderType && matchesCategory;
   });
-
-
 
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
 
@@ -156,14 +152,10 @@ export const Cheffkitchen = () => {
 
   };
 
-
   const subtotal = cart.reduce(
     (sum, item) => sum + item.qty * parseFloat(item.price),
     0
   );
-
-
-
   const handleAddToCart = (item) => {
     const selectedSize = selectedSizes[item.title] || "L";
 
@@ -244,7 +236,6 @@ export const Cheffkitchen = () => {
                     <h1 className="text-[#E0E6E9] text-3xl">Chef Kitchen</h1>
                   </motion.div>
 
-
                   <p className="text-[#E0E6E9] opacity-50">
                     {getTodayDate()}
                   </p>
@@ -295,7 +286,7 @@ export const Cheffkitchen = () => {
                     active === "today"
                       ? "0px"
                       : active === "our"
-                        ? "120px"
+                        ? "120px "
                         : "225px",
                 }}
               ></div>
@@ -323,7 +314,6 @@ export const Cheffkitchen = () => {
                 <span className="px-2"> <ChevronDown className="w-5" /></span>
               </button>
 
-              {/* Dropdown options */}
               {showType && (
                 <div className="absolute right-10 mt-8 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10 text-sm">
                   {["Dine In", "Take Away", "Delivery"].map((type) => (
@@ -361,7 +351,6 @@ export const Cheffkitchen = () => {
           </div>
         </div>
 
-
         {filteredMenuItems.length === 0 && (
           <div className="flex justify-center items-center mt-20">
             <p>
@@ -398,8 +387,6 @@ export const Cheffkitchen = () => {
                 <span className="text-[#34C759] font-bold text-sm">
                   {getPriceBySize(item.price, selectedSizes[item.title])} AED
                 </span>
-
-
               </div>
 
               <p className="text-xs text-gray-400 text-center mt-2">
@@ -415,15 +402,12 @@ export const Cheffkitchen = () => {
                           ${selectedSizes[item.title] === s
                         ? "bg-[#F99147] text-white border-[#F99147]"
                         : "border-gray-500 text-white hover:bg-[#F99147]"
-                      }
-      `}
+                      }`}
                   >
                     {s}
                   </button>
                 ))}
               </div>
-
-
               <div className="flex justify-center mt-6">
                 <div className="flex justify-center mt-6">
                   <button
@@ -440,7 +424,8 @@ export const Cheffkitchen = () => {
                         ? "bg-green-500 cursor-pointer rotate-scale"
                         : " cursor-pointer bg-orange-400"}`}
                   >
-                    {cart.some((cartItem) => cartItem.title === item.title)
+                    {cart.some((cartItem) => cartItem.title === item.title &&
+                      cartItem.size === (selectedSizes[item.title] || "L"))
                       ? "Added ✓"
                       : "Add"}
                   </button>
@@ -482,18 +467,7 @@ export const Cheffkitchen = () => {
       />
     )
   }
-
-
     </div >
 
   );
 };
-
-
-
-
-
-<div className="relative">
-  {/* Selected button */}
-
-</div>
