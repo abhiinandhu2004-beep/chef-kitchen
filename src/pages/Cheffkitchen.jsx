@@ -1,10 +1,10 @@
-import { Header } from "./Header";
-import { MainGrids } from "./MainGrids";
+import { Header } from "../components/Header";
+import { MainGrids } from "../components/MainGrids";
 import { useState } from "react";
-import { Orders } from "./Orders";
-import Sidebar from "./Sidebar";
+import { Orders } from "../components/Orders";
+import Sidebar  from "../components/Sidebar";
 import { OrderReceipt } from "../components/orderReceipt"
-import { menuItems } from "../assets/constants/Index";
+import { menuItems } from "../constants/Index";
 
 export const Cheffkitchen = () => {
   const [active, setActive] = useState("today");

@@ -14,7 +14,7 @@ export const MainGrids = ({
     selectedSizes = {},
     cart = [],
     handleAddToCart,
-    handleSizeSelect,}) => {
+    handleSizeSelect }) => {
 
     return (
         <div>

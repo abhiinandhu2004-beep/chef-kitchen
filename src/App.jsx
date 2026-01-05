@@ -1,6 +1,6 @@
 import './App.css'
-import { Cheffkitchen } from './components/Cheffkitchen'
-import { Explore } from './components/Explore'
+import { Cheffkitchen } from './pages/Cheffkitchen'
+import { Explore } from './pages/Explore'
 import { Routes, Route } from 'react-router-dom'
 
 

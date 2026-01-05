@@ -1,10 +1,8 @@
-import React from 'react'
 import logo from "../assets/catering(Fork & Knife).json"
 import { motion } from "framer-motion";
 import { FiSearch } from "react-icons/fi";
-import { useState } from 'react';
 import Lottie from "lottie-react";
-import { tabs } from '../assets/constants/Index';
+import { tabs } from '../constants/Index';
 
 export const Header = ({active,setActive,search,setSearch,showOrders}) => {
 
