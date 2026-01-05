@@ -1,7 +1,6 @@
 import './App.css'
 import { Cheffkitchen } from './components/Cheffkitchen'
 import { Explore } from './components/Explore'
-import Sidebar from './components/Sidebar'
 import { Routes, Route } from 'react-router-dom'
 
 
