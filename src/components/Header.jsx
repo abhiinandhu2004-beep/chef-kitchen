@@ -1,23 +1,30 @@
-import logo from "../assets/catering(Fork & Knife).json"
 import { motion } from "framer-motion";
 import { FiSearch } from "react-icons/fi";
-import Lottie from "lottie-react";
 import { tabs } from '../constants/Index';
+import { useKitchen } from "../context/KitchenContext";
 
-export const Header = ({active,setActive,search,setSearch,showOrders}) => {
+export const Header = () => {
+
+    const {
+        active,
+        setActive,
+        search,
+        setSearch,
+        showOrders
+    } = useKitchen();
 
     const getTodayDate = () => {
-    const today = new Date();
+        const today = new Date();
 
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        };
+
+        return today.toLocaleDateString("en-US", options);
     };
-
-    return today.toLocaleDateString("en-US", options);
-  };
 
     return (
         <div>
@@ -28,13 +35,9 @@ export const Header = ({active,setActive,search,setSearch,showOrders}) => {
 
 
                         <div className="flex flex-row mt-0">
-                            <Lottie
-                                animationData={logo}
-                                loop
-                                className="w-30 h-30"
-                            />
 
-                            <div className="flex flex-col mt-7">
+
+                            <div className="flex flex-col mt-2">
 
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}
@@ -67,7 +70,7 @@ export const Header = ({active,setActive,search,setSearch,showOrders}) => {
                         </div>
                     </div>
 
-                    <div className="flex text-white lg:mt-0 mt-8 space-x-6 py-3 overflow-x-auto">
+                    <div className="flex text-white lg:mt-0  space-x-6 py-5 overflow-x-auto">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}

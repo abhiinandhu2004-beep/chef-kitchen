@@ -1,9 +1,18 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import Lottie from "lottie-react";
 import emptyCartAnimation from "../assets/empty.json"
+import { useKitchen } from "../context/KitchenContext";
 
-export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setShowReceipt }) => {
+export const Orders = () => {
 
+  const {
+    cart,
+    setCart,
+    setShowOrders,
+    orderType,
+    setOrderType,
+    setShowReceipt
+  } = useKitchen();
 
   const removeItem = (title, size) => {
     setCart((prev) =>
@@ -13,7 +22,7 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
             if (item.qty > 1) {
               return { ...item, qty: item.qty - 1 };
             }
-            return null; // remove if qty is 1
+            return null;
           }
           return item;
         })
@@ -38,13 +47,13 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
     <div
       className="
         w-full bg-[#1F1D2B] px-5 py-5 text-white flex flex-col
-        lg:fixed lg:top-0 lg:right-0 lg:h-screen lg:w-96 lg:z-50
+        lg:fixed lg:top-0 lg:right-0 lg:h-screen lg:w-120 lg:z-50
         lg:rounded-l-2xl slide-in 
       "
     >
       <div className="flex justify-between items-center mb-4 mt-2">
         <h1 className="text-2xl">Orders #34562</h1>
-        <button onClick={onClose} className="text-gray-400 hover:text-white">
+        <button onClick={() => setShowOrders(false)} className="text-gray-400 hover:text-white">
           ✕
         </button>
       </div>
@@ -67,7 +76,6 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
         ))}
       </div>
 
-
       <div className="grid grid-cols-6 border-b border-gray-700 pb-2 text-sm mb-3 mt-11">
         <span className="col-span-3">Item</span>
         <span className="text-center">Qty</span>
@@ -75,7 +83,6 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 hide-scrollbar">
-
 
         <div className="flex-1 overflow-y-auto pr-2 hide-scrollbar">
           {cart.length === 0 ? (
@@ -95,7 +102,7 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
           ) : (
             cart.map((item, i) => (
               <div key={i} className="border-b border-gray-700 pb-4 mb-4">
-                <div className="grid grid-cols-6 items-center">
+                <div className="grid grid-cols-6 items-center relative">
                   <div className="col-span-3 flex gap-3">
                     <img src={item.img} className="w-12 h-12 rounded-full" />
                     <div>
@@ -103,8 +110,8 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
                       <p className="text-xs text-gray-400">{item.price} AED <span className="px-4">{item.size}</span></p>
                     </div>
                   </div>
-                  <div className="text-center">{item.qty}</div>
-                  <div className="col-span-2 text-right">
+                  <div className="text-center p-1 bg-gray-700 w-8 h-8 absolute right-37 rounded ">{item.qty}</div>
+                  <div className="col-span-2 text-right absolute right-0">
                     {(item.qty * item.price).toFixed(2)} AED
                   </div>
                 </div>
@@ -115,7 +122,7 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
                     placeholder="Order Note..."
                   />
 
-                  <button className="bg-[#1F1D2B] p-4 border border-amber-600 rounded-sm hover:border-pink-500"> 
+                  <button className="bg-[#1F1D2B] absolute right-1 top-1 p-4 border border-amber-600 rounded-sm hover:border-pink-500">
                     <AiOutlineDelete
                       onClick={() => removeItem(item.title, item.size)}
                       className="absolute right-1 top-1 text-orange-400 cursor-pointer text-2xl hover:text-pink-500"
@@ -127,8 +134,6 @@ export const Orders = ({ cart, setCart, onClose, orderType, setOrderType, setSho
             ))
           )}
         </div>
-
-
 
       </div>
 

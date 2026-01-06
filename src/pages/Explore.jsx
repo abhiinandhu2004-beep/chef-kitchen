@@ -10,7 +10,6 @@ export const Explore = () => {
           src="/Android Compact - 1.png"
           className="absolute inset-0 bg-black/90 w-full h-full object-cover "
         />
-
       
         <div className="absolute top-80 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className=" justify-center-center mt-6 text-center px-4">

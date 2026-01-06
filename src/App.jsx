@@ -3,8 +3,6 @@ import { Cheffkitchen } from './pages/Cheffkitchen'
 import { Explore } from './pages/Explore'
 import { Routes, Route } from 'react-router-dom'
 
-
-
 function App() {
   return (
     <>
@@ -17,7 +15,6 @@ function App() {
         
         </div>
         
-   
     </>
   )
 }

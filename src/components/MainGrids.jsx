@@ -1,11 +1,16 @@
 import Lottie from "lottie-react";
 import { ChevronDown } from 'lucide-react';
 import notFound from "../assets/No Data Found.json"
+import { useKitchen } from "../context/KitchenContext";
 
-export const MainGrids = ({ 
-    filteredMenuItems,
+export const MainGrids = ({
+  }) => {
+
+const {
+       filteredMenuItems,
     showType,
     setShowType,
+    showOrders,
     orderType,
     setOrderType,
     setShowOrders,
@@ -14,11 +19,12 @@ export const MainGrids = ({
     selectedSizes = {},
     cart = [],
     handleAddToCart,
-    handleSizeSelect }) => {
+    handleSizeSelect
+}=useKitchen();
 
     return (
         <div>
-            <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar lg:pt-65 md:pt-80 pt-85 px-4 pb-15">
+            <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar lg:pt-55 md:pt-80 pt-85 px-4 pb-15">
 
                 <div className="flex flex-row justify-between  ">
 
@@ -45,7 +51,7 @@ export const MainGrids = ({
                                             setOrderType(type);
                                             setShowType(false);
                                         }}
-                                        className="w-full text-left px-4 py-2 hover:bg-amber-500 text-white  cursor-pointer"
+                                        className="w-full  px-4 py-2 hover:bg-amber-500 text-white  cursor-pointer"
                                     >
                                         {type}
                                     </button>
@@ -85,7 +91,12 @@ export const MainGrids = ({
                     </div>
                 )}
 
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div
+                    className={`grid gap-8 transition-all duration-300
+                                 grid-cols-2
+                                 ${showOrders ? "md:grid-cols-3 gap-17" : "md:grid-cols-5"}
+                             `}>
+
                     {filteredMenuItems.map((item, i) => (
                         <div
                             key={i}
