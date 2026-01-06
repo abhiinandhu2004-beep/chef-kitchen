@@ -70,7 +70,7 @@ export const Header = () => {
                         </div>
                     </div>
 
-                    <div className="flex text-white lg:mt-0  space-x-6 py-5 overflow-x-auto">
+                    <div className="flex text-white lg:mt-0 mt-3 space-x-6 py-5 overflow-x-auto">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}

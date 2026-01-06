@@ -24,7 +24,7 @@ const {
 
     return (
         <div>
-            <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar lg:pt-55 md:pt-80 pt-85 px-4 pb-15">
+            <div className="flex-1 overflow-y-auto h-200px pr-2 hide-scrollbar lg:pt-55 md:pt-80 pt-70 px-4 pb-15">
 
                 <div className="flex flex-row justify-between  ">
 
