@@ -1,12 +1,16 @@
 import { useKitchen } from "../context/KitchenContext";
-
+import { CircleCheckBig } from "lucide-react";
 export const OrderReceipt = () => {
 
   const {
     cart,
     subtotal,
     orderType,
-    setShowReceipt
+    setShowReceipt,
+    isCompleted,
+    setisCompleted,
+    clearOrder,
+    onClose
   } = useKitchen();
 
   const DELIVERY_CHARGE = 10;
@@ -19,6 +23,30 @@ export const OrderReceipt = () => {
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-end lg:items-center justify-center">
 
+
+{isCompleted ? (
+
+            <div className="flex flex-col items-center justify-center h-full text-center p-6">
+              <CircleCheckBig className="w-20 h-20 text-green-500 mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-white">Order Completed</h2>
+              <p className="text-white mb-6">
+                Your order has been placed successfully
+              </p>
+
+              <button
+                onClick={() => {
+                  onClose();
+                  clearOrder();;
+                }}
+                className="bg-amber-500 text-white px-6 py-2 rounded-lg font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          ) :(
+
+
+      <>
       {/* Receipt Card */}
       <div
         className="
@@ -79,10 +107,13 @@ export const OrderReceipt = () => {
         </div>
 
         {/* CTA */}
-        <button className="mt-6 w-full bg-[#F99147] py-3 rounded-md">
+        <button className="mt-6 w-full bg-[#F99147] py-3 rounded-md"
+        onClick={()=>setisCompleted(true)}>
           Confirm Order
         </button>
       </div>
+      </>
+          )}
     </div>
   );
 };

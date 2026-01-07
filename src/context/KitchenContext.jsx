@@ -13,6 +13,18 @@ export const KitchenProvider = ({ children }) => {
     const [orderType, setOrderType] = useState("Dine In");
     const [showType, setShowType] = useState(false);
     const [showReceipt, setShowReceipt] = useState(false);
+    const [isCompleted, setisCompleted] = useState(false);
+
+
+    const clearOrder = () =>{
+        setShowOrders(false);
+        setSelectedSizes([]);
+        setCart([]);
+    }
+
+    const onClose = ()=> {
+        setShowReceipt(false);
+    }
     
     const filteredMenuItems = menuItems.filter((item) => {
         const matchesSearch = item.title
@@ -99,6 +111,8 @@ export const KitchenProvider = ({ children }) => {
                 setShowType,
                 showReceipt,
                 setShowReceipt,
+                isCompleted,
+                setisCompleted,
 
                 /* ORDER STATE */
                 orderType,
@@ -118,6 +132,8 @@ export const KitchenProvider = ({ children }) => {
                 handleSizeSelect,
                 handleAddToCart,
                 getPriceBySize,
+                clearOrder,
+                onClose
             }}
         >
             {children}

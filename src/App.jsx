@@ -1,3 +1,4 @@
+import { Layout } from './Dashboard/Layout'
 import './App.css'
 import { Cheffkitchen } from './pages/Cheffkitchen'
 import { Explore } from './pages/Explore'
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Explore/>}/>
           <Route path='/chffkitchen' element={<Cheffkitchen/>}/>
+          <Route path='/layout' element={<Layout/>}/>
         </Routes>
         
         </div>
