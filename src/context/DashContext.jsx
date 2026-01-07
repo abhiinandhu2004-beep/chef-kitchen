@@ -2,17 +2,17 @@ import { createContext, useContext, useState } from "react";
 
 export const DashContext = createContext();
 
-export const DashProvider = ({ Children }) => {
+export const DashProvider = ({ children }) => {
 
-const [showMenu, setShowMenu] = useState(false);
+    const [active, setActive] = useState("Category");
 
     return (
-        <DashContext.Provider 
-        value={{
-            showMenu,
-            setShowMenu
-        }}>
-            {Children}
+        <DashContext.Provider
+            value={{
+                active,
+                setActive
+            }}>
+            {children}
         </DashContext.Provider>
     )
 }
