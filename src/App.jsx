@@ -1,4 +1,57 @@
 
+// import './App.css'
+// import { Cheffkitchen } from './pages/Cheffkitchen'
+// import { Explore } from './pages/Explore'
+// import { Routes, Route } from 'react-router-dom'
+// import { KitchenProvider } from './context/KitchenContext'
+// import { DashProvider } from './context/DashContext'
+// import { Layout } from './Dashboard/Layout'
+// import { Category } from './Dashboard/Category'
+// import { Product } from './Dashboard/Product'
+// import { Orders } from './components/Orders'
+// import { DashContext } from './context/DashContext'
+
+// function App() {
+
+
+
+//   return (
+//     <>
+//       <div className=' flex flex-row'>
+
+//         <Routes>
+//           <Route path='/' element={
+//             <KitchenProvider>
+//               <Explore />
+//             </KitchenProvider>} />
+
+
+//           <Route path='/chffkitchen' element={
+//             <KitchenProvider>
+//               <Cheffkitchen />
+//             </KitchenProvider>} />
+
+        
+
+//           <Route path='/admin' element={<Layout/>}>
+//               <Route index element={<Category/>}/>
+//               <Route path='product' element={<Product/>}/>
+//               <Route path='orders' element={<Orders/>}/>
+
+//           </Route>
+
+//         </Routes>
+
+
+//       </div>
+
+//     </>
+//   )
+// }
+
+// export default App
+
+
 import './App.css'
 import { Cheffkitchen } from './pages/Cheffkitchen'
 import { Explore } from './pages/Explore'
@@ -6,35 +59,49 @@ import { Routes, Route } from 'react-router-dom'
 import { KitchenProvider } from './context/KitchenContext'
 import { DashProvider } from './context/DashContext'
 import { Layout } from './Dashboard/Layout'
+import { Category } from './Dashboard/Category'
+import { Product } from './Dashboard/Product'
+import { Orders } from './Dashboard/Orders'
+
 
 function App() {
   return (
-    <>
-      <div className=' flex flex-row'>
+    <div className='flex flex-row'>
+      <Routes>
 
-        <Routes>
-          <Route path='/' element={
+        <Route
+          path='/'
+          element={
             <KitchenProvider>
               <Explore />
-            </KitchenProvider>} />
+            </KitchenProvider>
+          }
+        />
 
-
-          <Route path='/chffkitchen' element={
+        <Route
+          path='/chffkitchen'
+          element={
             <KitchenProvider>
               <Cheffkitchen />
-            </KitchenProvider>} />
+            </KitchenProvider>
+          }
+        />
 
-
-          <Route path='/layout' element={
+        <Route
+          path='/admin'
+          element={
             <DashProvider>
               <Layout />
-            </DashProvider>} />
-        </Routes>
+            </DashProvider>
+          }
+        >
+          <Route index element={<Category />} />
+          <Route path='product' element={<Product />} />
+          <Route path='orders' element={<Orders/>} />
+        </Route>
 
-
-      </div>
-
-    </>
+      </Routes>
+    </div>
   )
 }
 
