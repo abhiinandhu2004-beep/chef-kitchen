@@ -3,7 +3,23 @@ import { useDash } from "../context/DashContext"
 
 export const Category = () => {
 
-  const { setShowcategory, categories, deleteCategory, editCategory } = useDash();
+  const { setShowcategory, categories, deleteCategory, editCategory, products } = useDash();
+
+  const getCategoryStats = (categoryName) => {
+    const filteredProducts = products.filter(
+      (p) => p.category === categoryName
+    );
+
+    const productCount = filteredProducts.length;
+
+    const totalStock = filteredProducts.reduce(
+      (sum, p) => sum + (p.stock || 0),
+      0
+    );
+
+    return { productCount, totalStock };
+  };
+
 
   return (
     <div className='flex flex-col max-w-5xl mx-auto p-6 items-center'>
@@ -27,19 +43,43 @@ export const Category = () => {
             </thead>
 
             <tbody>
-              {categories.map((items, index) => (
-                <tr key={index} className='bg-gray-700 text-white/70 hover:bg-gray-600 text-center '>
-                  <td className='py-2 px-4 border-b'>{items.name}</td>
-                  <td className='py-2 px-4 border-b'>{items.products}</td>
-                  <td className='py-2 px-4 border-b'>{items.stock}</td>
-                  <td className='py-2 px-4 border-b'>
-                    <button className='bg-green-600 text-white px-2 py-1 rounded mr-2'
-                      onClick={() => editCategory(index)}>Edit</button>
-                    <button className='bg-red-600 text-white px-2 py-1 rounded'
-                      onClick={() => deleteCategory(index)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
+              {categories.map((items, index) => {
+  const { productCount, totalStock } =
+    getCategoryStats(items.name);
+
+  return (
+    <tr
+      key={index}
+      className='bg-gray-700 text-white/70 hover:bg-gray-600 text-center'
+    >
+      <td className='py-2 px-4 border-b'>{items.name}</td>
+
+      <td className='py-2 px-4 border-b'>
+        {productCount}
+      </td>
+
+      <td className='py-2 px-4 border-b'>
+        {totalStock}
+      </td>
+
+      <td className='py-2 px-4 border-b'>
+        <button
+          className='bg-green-600 text-white px-2 py-1 rounded mr-2'
+          onClick={() => editCategory(index)}
+        >
+          Edit
+        </button>
+        <button
+          className='bg-red-600 text-white px-2 py-1 rounded'
+          onClick={() => deleteCategory(index)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+})}
+
             </tbody>
           </table>
 
