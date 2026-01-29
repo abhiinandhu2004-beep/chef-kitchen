@@ -11,14 +11,12 @@ const AddProduct = () => {
         categories, // ✅ add this
     } = useDash();
 
-
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [stock, setStock] = useState("");
     const [sizes, setSizes] = useState([]);
     const [orderType, setOrderType] = useState([]);
     const [image, setImage] = useState(null);
-
 
     useEffect(() => {
         if (editingProduct) {
@@ -77,7 +75,7 @@ const AddProduct = () => {
             stock: Number(stock),
             sizes,
             orderType,
-            image: image instanceof File ? URL.createObjectURL(image) : image,
+            image,
         };
 
         editingProduct
@@ -109,12 +107,33 @@ const AddProduct = () => {
                     {/* Image */}
                     <div className="flex flex-col gap-1">
                         <label className="text-sm text-gray-600">Product Image</label>
+
                         <input
                             type="file"
+                            accept="image/*"
                             className="p-2.5 bg-gray-100 rounded-lg"
-                            onChange={(e) => setImage(e.target.files[0])}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                    setImage(reader.result); // ✅ BASE64 STRING
+                                };
+                                reader.readAsDataURL(file);
+                            }}
                         />
+
+                        {/* 👀 IMAGE PREVIEW */}
+                        {image && (
+                            <img
+                                src={image}
+                                alt="preview"
+                                className="w-28 h-28 object-cover rounded-lg border mt-2"
+                            />
+                        )}
                     </div>
+
 
                     {/* Name */}
                     <div className="flex flex-col gap-1">

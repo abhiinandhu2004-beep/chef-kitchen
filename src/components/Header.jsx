@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { FiSearch } from "react-icons/fi";
-import { tabs } from '../constants/Index';
+import { useDash } from "../context/DashContext";
 import { useKitchen } from "../context/KitchenContext";
 
 export const Header = () => {
+
+    const { categories } = useDash();
 
     const {
         active,
@@ -70,16 +72,26 @@ export const Header = () => {
                         </div>
                     </div>
 
-                    <div className="flex text-white lg:mt-0 mt-3 space-x-6 py-5 overflow-x-auto">
-                        {tabs.map((tab) => (
+                    <div className="flex text-white lg:mt-0  space-x-6 py-5 overflow-x-auto">
+
+                        {/* Default tab */}
+                        <button
+                            onClick={() => setActive("today")}
+                            className={active === "today" ? "text-[#F99147]" : "text-white"}
+                        >
+                            Today
+                        </button>
+
+                        {/* Dynamic categories */}
+                        {categories.map((cat, index) => (
                             <button
-                                key={tab.id}
-                                onClick={() => setActive(tab.id)}
+                                key={index}
+                                onClick={() => setActive(cat.name)}
                                 className={
-                                    active === tab.id ? "text-[#F99147]" : "text-white"
+                                    active === cat.name ? "text-[#F99147]" : "text-white"
                                 }
                             >
-                                {tab.label}
+                                {cat.name}
                             </button>
                         ))}
                     </div>
@@ -88,19 +100,16 @@ export const Header = () => {
                         <div className="w-full border-b-2 border-gray-600"></div>
 
                         <div
-                            className="absolute top-0 border-b-4 border-[#F99147] rounded-full transition-all"
+                            className="absolute top-0 border-b-4 border-[#F99147] rounded-full transition-all duration-300"
                             style={{
-                                width: "80px",
-                                left:
-                                    active === "today"
-                                        ? "0px"
-                                        : active === "our"
-                                            ? "120px "
-                                            : "225px",
+                                width: "50px",
+                                transform: `translateX(${active === "today"
+                                        ? 0
+                                        : (categories.findIndex(c => c.name === active) + 1) * 70
+                                    }px)`
                             }}
-                        ></div>
+                        />
                     </div>
-
                     <div className="border-b border-gray-600 mb-6"></div>
                 </div>
             </div>

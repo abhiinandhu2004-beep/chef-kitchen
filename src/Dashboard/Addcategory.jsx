@@ -56,14 +56,6 @@ const Addcategory = () => {
                             className='w-80 p-2 bg-gray-300 rounded focus:outline-none '
                             onChange={(e) => setName(e.target.value)} required />
 
-                        {/* <input type="text" placeholder='Products' value={products}
-                            className='max-w-2xl mx-auto w-full p-2 bg-gray-300 rounded focus:outline-none '
-                            onChange={(e) => setProducts(e.target.value)} required />
-
-                        <input type="text" placeholder='stocks' value={stock}
-                            className='max-w-2xl mx-auto w-full p-2 bg-gray-300 rounded focus:outline-none '
-                            onChange={(e) => setStock(e.target.value)} required /> */}
-
                         <button
                             type="submit"
                             className="w-full bg-blue-500 text-white py-2 rounded"

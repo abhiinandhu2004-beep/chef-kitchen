@@ -72,27 +72,22 @@ function App() {
         <Route
           path='/'
           element={
-            <KitchenProvider>
-              <Explore />
-            </KitchenProvider>
+                          <Explore />
+
           }
         />
 
         <Route
           path='/chffkitchen'
           element={
-            <KitchenProvider>
-              <Cheffkitchen />
-            </KitchenProvider>
+            <Cheffkitchen />
           }
         />
 
         <Route
           path='/admin'
           element={
-            <DashProvider>
-              <Layout />
-            </DashProvider>
+         <Layout />
           }
         >
           <Route index element={<Category />} />

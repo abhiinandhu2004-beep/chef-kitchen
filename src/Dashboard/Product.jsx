@@ -6,8 +6,6 @@ import { useDash } from '../context/DashContext';
 import AddProduct from './Addproducts';
 
 
-
-
 export const Product = () => {
 
   const { setShowProductModal, showProductModal, products, deleteProduct, editProduct } = useDash();
@@ -70,7 +68,6 @@ export const Product = () => {
                       )}
                     </td>
 
-
                     {/* Name */}
                     <td className="px-6 py-4">{item.name}</td>
 
@@ -110,7 +107,6 @@ export const Product = () => {
                         ))}
                       </div>
                     </td>
-
 
                     {/* Actions */}
                     <td className="px-6 py-4 text-right">
