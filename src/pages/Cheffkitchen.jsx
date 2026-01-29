@@ -2,12 +2,13 @@
 import { Header } from "../components/Header";
 import { MainGrids } from "../components/MainGrids";
 import { Orders } from "../components/Orders";
+import { PaymentMethod } from "../components/PaymentMethod";
 import Sidebar from "../components/Sidebar";
 import { OrderReceipt } from "../components/orderReceipt";
 import { useKitchen } from "../context/KitchenContext";
 
 export const Cheffkitchen = () => {
-  const { showOrders, showReceipt } = useKitchen();
+  const { showOrders, showReceipt,showpayment } = useKitchen();
   const ordersWidth = 380; // width of Orders panel in px
 
   return (
@@ -41,6 +42,7 @@ export const Cheffkitchen = () => {
 
       {/* Receipt overlay */}
       {showReceipt && <OrderReceipt />}
+      {showpayment && <PaymentMethod/>}
     </div>
   );
 };

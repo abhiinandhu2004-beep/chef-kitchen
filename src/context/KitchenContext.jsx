@@ -206,7 +206,10 @@ export const KitchenProvider = ({ children }) => {
     const [showType, setShowType] = useState(false);
     const [showReceipt, setShowReceipt] = useState(false);
     const [isCompleted, setisCompleted] = useState(false);
-    // const [payment, setPayment] = useState(false);
+    const [payment, setPayment] = useState(false);
+    const [showpayment, setShowpayment] = useState(false);
+
+
 
     const [orders, setOrders] = useState(() => {
         try {
@@ -223,8 +226,8 @@ export const KitchenProvider = ({ children }) => {
     });
 
     useEffect(() => {
-  console.log("ORDERS STATE →", orders);
-}, [orders]);
+        console.log("ORDERS STATE →", orders);
+    }, [orders]);
 
 
 
@@ -251,12 +254,14 @@ export const KitchenProvider = ({ children }) => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
 
 
-    const onOrder = () => {
+    const onOrder = (paymentMethod) => {
+
         if (cart.length === 0) return;
 
         const newOrder = {
             id: Date.now(),
             orderType,
+             paymentMethod, 
             status: "Pending",
             createdAt: Date.now(),
             subTotal: subtotal,
@@ -277,6 +282,7 @@ export const KitchenProvider = ({ children }) => {
         setCart([]);                 // ✅ clear cart
         setSelectedSizes({});
         setisCompleted(true);
+    
     };
 
     /* ===============================
@@ -379,6 +385,9 @@ export const KitchenProvider = ({ children }) => {
                 orders,
                 onOrder,
                 deleteOrder,
+                setPayment,
+                setShowpayment,
+                showpayment,
 
                 /* MENU */
                 filteredMenuItems,
@@ -388,6 +397,7 @@ export const KitchenProvider = ({ children }) => {
                 setCart,
                 totalQty,
                 subtotal,
+
 
                 /* HELPERS */
                 selectedSizes,

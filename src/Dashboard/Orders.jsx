@@ -11,7 +11,8 @@ export const Orders = () => {
       <div className='flex p-5 '>
         <h1 className='font-bold text-xl'>Orders List</h1>
       </div>
-      <div className='flex flex-col bg-gray-600 max-w-7xl h-145 ml-9 rounded relative'>
+     <div className="flex flex-col bg-gray-600 max-w-7xl h-full ml-9 rounded relative overflow-y-auto">
+
         <div className='flex justify-between w-full'>
           <input type="text" placeholder='Search Here..'
             className='w-130 bg-gray-400 h-10 border-white rounded  outline-none p-4 m-4' />
@@ -29,7 +30,7 @@ export const Orders = () => {
                 <th className="px-2 py-2 text-center ">Price</th>
                 <th className="px-2 py-2 text-center ">Order  Type</th>
                 <th className="px-2 py-2 text-center rounded-tr-2xl">
-                  Actions
+                  Payment Methode
                 </th>
               </tr>
             </thead>
@@ -75,12 +76,13 @@ export const Orders = () => {
         </td>
 
         <td className="px-2 py-2 text-center">
-          <button
+          {/* <button
             className="px-2 py-1 text-xs rounded bg-red-500 hover:bg-red-600"
             onClick={() => deleteOrder(order.id)}
           >
             Delete
-          </button>
+          </button> */}
+           {order.paymentMethod || "—"}
         </td>
       </tr>
     ))
