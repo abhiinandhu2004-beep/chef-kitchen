@@ -6,6 +6,7 @@ import { useDash } from '../context/DashContext';
 import AddProduct from './Addproducts';
 
 
+
 export const Product = () => {
 
   const { setShowProductModal, showProductModal, products, deleteProduct, editProduct } = useDash();

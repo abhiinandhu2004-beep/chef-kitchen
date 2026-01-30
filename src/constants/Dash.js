@@ -1,4 +1,4 @@
-import { Shapes,StretchHorizontal,ShoppingCart } from "lucide-react";
+import { Shapes ,StretchHorizontal, ShoppingCart, LogOut } from "lucide-react";
 
 
 export const tab = [
@@ -18,6 +18,7 @@ export const tab = [
     label: "Orders",
     Icon: ShoppingCart,
   },
+  
 ];
 
 export const categories = [

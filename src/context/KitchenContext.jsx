@@ -261,7 +261,7 @@ export const KitchenProvider = ({ children }) => {
         const newOrder = {
             id: Date.now(),
             orderType,
-             paymentMethod, 
+            paymentMethod,
             status: "Pending",
             createdAt: Date.now(),
             subTotal: subtotal,
@@ -282,7 +282,7 @@ export const KitchenProvider = ({ children }) => {
         setCart([]);                 // ✅ clear cart
         setSelectedSizes({});
         setisCompleted(true);
-    
+
     };
 
     /* ===============================
@@ -325,13 +325,15 @@ export const KitchenProvider = ({ children }) => {
     };
 
     const getPriceBySize = (sizes, selected) => {
-        if (!selected) return sizes?.[sizes.length - 1]?.price || 0;
+        if (!selected) return sizes?.[0]?.price || 0; // ✅ Small
         return selected.price;
     };
 
+
     const handleAddToCart = (item) => {
         const selectedSize =
-            selectedSizes[item.id] || item.sizes[item.sizes.length - 1];
+            selectedSizes[item.id] || item.sizes[0]; // ✅ Small
+
 
         setCart(prev => {
             const existing = prev.find(

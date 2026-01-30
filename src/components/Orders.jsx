@@ -109,7 +109,7 @@ export const Orders = () => {
                   </div>
                 </div>
 
-                <div className="text-center p-1 bg-gray-700 w-8 h-8 absolute lg:right-37 right-30 rounded">
+                <div className="text-center p-1 bg-gray-700 w-8 h-8 absolute lg:right-30 right-30 rounded">
                   {item.qty}
                 </div>
 
@@ -120,7 +120,7 @@ export const Orders = () => {
 
               <div className="relative mt-3 flex flex-row gap-4">
                 <input
-                  className="w-70 bg-[#2C3045] px-3 py-2 rounded-md text-xs"
+                  className="w-70 bg-[#2C3045] px-3 py-3 rounded-md text-xs"
                   placeholder="Order Note..."
                 />
 

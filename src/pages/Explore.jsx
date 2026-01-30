@@ -29,10 +29,10 @@ export const Explore = () => {
             </p>
 
             <button
-              onClick={() => navigate("/chffkitchen")}
+              onClick={() => navigate("/login")}
               className="bg-orange-400 text-white px-6 py-3 rounded-xl mt-6 shadow-lg hover:bg-orange-500 transition w-full max-w-xs"
             >
-              Explore Menu
+              Login
             </button>
           </div>
 

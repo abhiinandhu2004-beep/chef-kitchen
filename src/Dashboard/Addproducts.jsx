@@ -125,13 +125,13 @@ const AddProduct = () => {
                         />
 
                         {/* 👀 IMAGE PREVIEW */}
-                        {image && (
+                        {/* {image && (
                             <img
                                 src={image}
                                 alt="preview"
                                 className="w-28 h-28 object-cover rounded-lg border mt-2"
                             />
-                        )}
+                        )} */}
                     </div>
 
 

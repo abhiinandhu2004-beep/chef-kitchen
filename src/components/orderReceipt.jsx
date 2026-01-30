@@ -20,7 +20,7 @@
 //     orderType === "Delivery" ? DELIVERY_CHARGE : 0;
 
 //   const total = subtotal + deliveryCharge;
-
+  
 //   return (
 //     <div className="fixed inset-0 bg-black/60 z-50 flex items-end lg:items-center justify-center">
 

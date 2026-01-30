@@ -62,6 +62,7 @@ import { Layout } from './Dashboard/Layout'
 import { Category } from './Dashboard/Category'
 import { Product } from './Dashboard/Product'
 import { Orders } from './Dashboard/Orders'
+import { Login } from './pages/Login'
 
 
 function App() {
@@ -78,7 +79,15 @@ function App() {
         />
 
         <Route
-          path='/chffkitchen'
+          path='/login'
+          element={
+                          <Login/>
+
+          }
+        />
+
+        <Route
+          path='/cheffkitchen'
           element={
             <Cheffkitchen />
           }

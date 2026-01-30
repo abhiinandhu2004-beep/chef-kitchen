@@ -17,6 +17,7 @@ export const MainGrids = ({ }) => {
     cart = [],
     handleAddToCart,
     handleSizeSelect,
+    showOrders
   } = useKitchen();
 
   return (
@@ -30,34 +31,53 @@ export const MainGrids = ({ }) => {
           <div className="relative flex gap-4 ">
             <button
               onClick={() => setShowType(!showType)}
-              className="flex items-center gap-1 bg-[#2D303E] px-5 py-2 rounded-lg border border-gray-600 text-white cursor-pointer text-sm w-37"
+              className="flex items-center justify-between gap-2
+    bg-[#2D303E] px-4 py-2 rounded-lg
+    border border-gray-600 text-white
+    text-sm w-40
+    hover:border-amber-500 transition-all"
             >
-              {orderType}
-              <span className="px-2">
-                <ChevronDown className="w-5" />
-              </span>
+              <span>{orderType}</span>
+
+              <ChevronDown
+                className={`w-4 transition-transform duration-200 
+      ${showType ? "rotate-180" : ""}`}
+              />
             </button>
 
-            {showType && (
-              <div className="absolute right-10 mt-8 w-40 bg-[#2D303E] rounded-lg shadow-lg overflow-hidden z-10 text-sm">
-                {["Dine In", "Take Away", "Delivery"].map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => {
-                      setOrderType(type);
-                      setShowType(false);
-                    }}
-                    className="w-full px-4 py-2 hover:bg-amber-500 text-white cursor-pointer"
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            )}
+
+          {showType && (
+  <div
+    className="absolute right-10 mt-2 w-40
+      bg-[#2D303E] border border-gray-600
+      rounded-lg shadow-xl
+      overflow-hidden z-20"
+  >
+    {["Dine In", "Take Away", "Delivery"].map((type) => (
+      <button
+        key={type}
+        onClick={() => {
+          setOrderType(type);
+          setShowType(false);
+        }}
+        className={`w-full text-left px-4 py-2 text-sm
+          transition-colors
+          ${
+            orderType === type
+              ? "bg-amber-500 text-black font-medium"
+              : "text-white hover:bg-[#3A3F52]"
+          }`}
+      >
+        {type}
+      </button>
+    ))}
+  </div>
+)}
+
 
             <div className="relative px-6">
               {totalQty > 0 && (
-                <div className="rounded-full z-10 w-6 h-6 absolute right-26 -top-2 bg-red-500 text-white flex items-center justify-center text-xs">
+                <div className="rounded-full z-10 w-6 h-6 absolute right-32 -top-3 bg-red-500 text-white flex items-center justify-center text-xs">
                   {totalQty}
                 </div>
               )}
@@ -86,15 +106,19 @@ export const MainGrids = ({ }) => {
           </div>
         )}
 
-        <div
-          className="grid gap-8 transition-all duration-500
+<div
+  className={`grid gap-8 transition-all duration-500
     grid-cols-2
     sm:grid-cols-2
     md:grid-cols-3
-    lg:grid-cols-4
-    xl:grid-cols-5
-  "
-        >
+    ${
+      showOrders
+        ? "lg:grid-cols-3 xl:grid-cols-3"
+        : "lg:grid-cols-4 xl:grid-cols-5"
+    }
+  `}
+>
+
 
           {filteredMenuItems.map((item, i) => (
             <div
@@ -103,7 +127,7 @@ export const MainGrids = ({ }) => {
             >
               <img
                 src={item.image}
-                className="w-30 h-30 rounded-full absolute -top-15 left-1/2 -translate-x-1/2"
+                className="w-26 h-26 rounded-full absolute -top-10 left-1/2 -translate-x-1/2"
               />
 
               <h3 className="mt-16 font-robot text-white text-center text-xl">
@@ -122,50 +146,54 @@ export const MainGrids = ({ }) => {
               </p>
 
               <div className="flex justify-center gap-2 mt-3">
-                {item.sizes.map((s) => (
-                  <button
-                    key={s.size}
-                    onClick={() => handleSizeSelect(item.id, s)}
-                    className={`text-xs px-2 py-1 rounded-md border
-      ${selectedSizes[item.id]?.size === s.size
-                        ? "bg-[#F99147] text-white"
-                        : "border-gray-500 text-white hover:bg-[#F99147]"
-                      }`}
-                  >
-                    {s.size}
-                  </button>
-                ))}
+                {item.sizes.map((s, index) => {
+                  const isSelected =
+                    selectedSizes[item.id]?.size === s.size ||
+                    (!selectedSizes[item.id] && index === 0);
 
+                  return (
+                    <button
+                      key={s.size}
+                      onClick={() => handleSizeSelect(item.id, s)}
+                      className={`text-xs px-2 py-1 rounded-md border
+        ${isSelected
+                          ? "bg-[#F99147] text-white"
+                          : "border-gray-500 text-white hover:bg-[#F99147]"
+                        }`}
+                    >
+                      {s.size}
+                    </button>
+                  );
+                })}
 
               </div>
 
-             <div className="flex justify-center mt-6">
-  <button
-    onClick={() => handleAddToCart(item)}
-    className={`
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className={`
       px-6 py-2 rounded-xl text-white text-sm font-medium
       transition-all duration-300 ease-in-out
       active:scale-95
-      ${
-        cart.some(
-          (cartItem) =>
-            cartItem.id === item.id &&
-            cartItem.size === selectedSizes[item.id]?.size
-        ) 
-          ? "bg-green-500 scale-105 shadow-lg"
-          : "bg-orange-400 hover:scale-105 hover:shadow-md"
-      }
+      ${cart.some(
+                    (cartItem) =>
+                      cartItem.id === item.id &&
+                      cartItem.size === selectedSizes[item.id]?.size
+                  )
+                      ? "bg-green-500 scale-105 shadow-lg"
+                      : "bg-orange-400 hover:scale-105 hover:shadow-md"
+                    }
     `}
-  >
-    {cart.some(
-      (cartItem) =>
-        cartItem.id === item.id &&
-        cartItem.size === selectedSizes[item.id]?.size
-    )
-      ? "Added ✓"
-      : "Add"}
-  </button>
-</div>
+                >
+                  {cart.some(
+                    (cartItem) =>
+                      cartItem.id === item.id &&
+                      cartItem.size === selectedSizes[item.id]?.size
+                  )
+                    ? "Added ✓"
+                    : "Add"}
+                </button>
+              </div>
 
             </div>
           ))}
