@@ -195,7 +195,7 @@ const MAX_ORDERS = 50; // or any number you want
 
 
 export const KitchenProvider = ({ children }) => {
-    const { products } = useDash();
+    const { products, setProducts } = useDash();
 
     const [active, setActive] = useState("today");
     const [cart, setCart] = useState([]);
@@ -254,36 +254,86 @@ export const KitchenProvider = ({ children }) => {
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
 
 
-    const onOrder = (paymentMethod) => {
+    // const onOrder = (paymentMethod) => {
 
-        if (cart.length === 0) return;
+    //     if (cart.length === 0) return;
 
-        const newOrder = {
-            id: Date.now(),
-            orderType,
-            paymentMethod,
-            status: "Pending",
-            createdAt: Date.now(),
-            subTotal: subtotal,
+    //     const newOrder = {
+    //         id: Date.now(),
+    //         orderType,
+    //         paymentMethod,
+    //         status: "Pending",
+    //         createdAt: Date.now(),
+    //         subTotal: subtotal,
 
-            items: cart.map(item => ({
-                id: item.id,
-                image: item.image,
-                name: item.name,
-                size: item.size,
-                qty: item.qty,
-                price: item.price,
-            })),
+    //         items: cart.map(item => ({
+    //             id: item.id,
+    //             image: item.image,
+    //             name: item.name,
+    //             size: item.size,
+    //             qty: item.qty,
+    //             price: item.price,
+    //         })),
+    //     };
+
+    //     console.log("NEW ORDER →", newOrder);
+
+    //     setOrders(prev => [...prev, newOrder]);
+    //     setCart([]);                 // ✅ clear cart
+    //     setSelectedSizes({});
+    //     setisCompleted(true);
+
+    // };
+
+const onOrder = (paymentMethod) => {
+    if (cart.length === 0) return;
+
+    // 🟢 1. Reduce product stock
+    const updatedProducts = products.map(product => {
+        const orderedItem = cart.find(
+            item => item.id === product.id
+        );
+
+        if (!orderedItem) return product;
+
+        return {
+            ...product,
+            stock: Math.max(
+                (product.stock || 0) - orderedItem.qty,
+                0
+            ),
         };
+    });
 
-        console.log("NEW ORDER →", newOrder);
+    setProducts(updatedProducts); // ✅ UPDATE GLOBAL STOCK
 
-        setOrders(prev => [...prev, newOrder]);
-        setCart([]);                 // ✅ clear cart
-        setSelectedSizes({});
-        setisCompleted(true);
-
+    // 🟢 2. Create order
+    const newOrder = {
+        id: Date.now(),
+        orderType,
+        paymentMethod,
+        status: "Pending",
+        createdAt: Date.now(),
+        subTotal: subtotal,
+        items: cart.map(item => ({
+            id: item.id,
+            image: item.image,
+            name: item.name,
+            size: item.size,
+            qty: item.qty,
+            price: item.price,
+        })),
     };
+
+    setOrders(prev => [...prev, newOrder]);
+
+    // 🟢 3. Clear cart & UI
+    setCart([]);
+    setSelectedSizes({});
+    setisCompleted(true);
+};
+
+
 
     /* ===============================
        HELPERS
@@ -330,39 +380,85 @@ export const KitchenProvider = ({ children }) => {
     };
 
 
+    // const handleAddToCart = (item) => {
+    //     const selectedSize =
+    //         selectedSizes[item.id] || item.sizes[0]; // ✅ Small
+
+
+    //     setCart(prev => {
+    //         const existing = prev.find(
+    //             c => c.id === item.id && c.size === selectedSize.size
+    //         );
+
+    //         if (existing) {
+    //             return prev.map(c =>
+    //                 c.id === item.id && c.size === selectedSize.size
+    //                     ? { ...c, qty: c.qty + 1 }
+    //                     : c
+    //             );
+    //         }
+
+    //         return [
+
+
+    //             ...prev,
+    //             {
+    //                 id: item.id,
+    //                 image: item.image,
+    //                 name: item.name,
+    //                 size: selectedSize.size,
+    //                 price: selectedSize.price,
+    //                 qty: 1,
+    //             },
+    //         ];
+    //     });
+    // };
+
     const handleAddToCart = (item) => {
-        const selectedSize =
-            selectedSizes[item.id] || item.sizes[0]; // ✅ Small
 
+    // 🛑 HARD STOP IF OUT OF STOCK
+    if (!item.stock || item.stock <= 0) {
+        alert(`${item.name} is out of stock`);
+        return;
+    }
 
-        setCart(prev => {
-            const existing = prev.find(
-                c => c.id === item.id && c.size === selectedSize.size
+    const selectedSize =
+        selectedSizes[item.id] || item.sizes[0];
+
+    setCart(prev => {
+        const existing = prev.find(
+            c => c.id === item.id && c.size === selectedSize.size
+        );
+
+        // 🛑 Prevent exceeding stock
+        const currentQty = existing ? existing.qty : 0;
+        if (currentQty + 1 > item.stock) {
+            alert(`Only ${item.stock} item(s) available`);
+            return prev;
+        }
+
+        if (existing) {
+            return prev.map(c =>
+                c.id === item.id && c.size === selectedSize.size
+                    ? { ...c, qty: c.qty + 1 }
+                    : c
             );
+        }
 
-            if (existing) {
-                return prev.map(c =>
-                    c.id === item.id && c.size === selectedSize.size
-                        ? { ...c, qty: c.qty + 1 }
-                        : c
-                );
-            }
+        return [
+            ...prev,
+            {
+                id: item.id,
+                image: item.image,
+                name: item.name,
+                size: selectedSize.size,
+                price: selectedSize.price,
+                qty: 1,
+            },
+        ];
+    });
+};
 
-            return [
-
-
-                ...prev,
-                {
-                    id: item.id,
-                    image: item.image,
-                    name: item.name,
-                    size: selectedSize.size,
-                    price: selectedSize.price,
-                    qty: 1,
-                },
-            ];
-        });
-    };
 
     return (
         <KitchenContext.Provider

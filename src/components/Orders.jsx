@@ -13,21 +13,22 @@ export const Orders = () => {
     setShowReceipt
   } = useKitchen();
 
-  const removeItem = ( size) => {
-    setCart((prev) =>
-      prev
-        .map((item) => {
-          if (item.name === name && item.size === size) {
-            if (item.qty > 1) {
-              return { ...item, qty: item.qty - 1 };
-            }
-            return null;
+const removeItem = (name, size) => {
+  setCart((prev) =>
+    prev
+      .map((item) => {
+        if (item.name === name && item.size === size) {
+          if (item.qty > 1) {
+            return { ...item, qty: item.qty - 1 };
           }
-          return item;
-        })
-        .filter(Boolean)
-    );
-  };
+          return null; // remove item completely
+        }
+        return item;
+      })
+      .filter(Boolean)
+  );
+};
+
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.qty * parseFloat(item.price),
@@ -126,7 +127,8 @@ export const Orders = () => {
 
                 <button className="bg-[#1F1D2B] absolute right-1 top-1 p-4 border border-amber-600 rounded-sm hover:border-pink-500">
                   <AiOutlineDelete
-                    onClick={() => removeItem(item.title, item.size)}
+                    onClick={() => removeItem(item.name, item.size)}
+
                     className="absolute right-1 top-1 text-orange-400 cursor-pointer text-2xl hover:text-pink-500"
                   />
                 </button>

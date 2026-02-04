@@ -117,6 +117,7 @@ export const DashProvider = ({ children }) => {
                 editingCategory,
 
                 // PRODUCT
+                setProducts,
                 products,
                 addProduct,
                 deleteProduct,
